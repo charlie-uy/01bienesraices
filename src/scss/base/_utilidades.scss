@@ -1,0 +1,10 @@
+@use 'sass:math';
+@use 'base/variables' as v;
+
+.seccion {
+    margin-top: math.div( v.$separacion, 2);
+    margin-bottom: math.div( v.$separacion, 2);
+}
+.contenido-centrado {
+    max-width: 800px;
+}
