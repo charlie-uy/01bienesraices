@@ -1,2 +1,2 @@
-# 01bienesraices
+# bienesraices
 Proyecto estudio Bienes Raices - Curso DW
