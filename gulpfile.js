@@ -83,7 +83,6 @@ function imgAvif(){
  
 function imgSvg(){
     return src(path.svg)
-        .pipe(svg())
         .pipe(dest('build/img'));
 }
  
