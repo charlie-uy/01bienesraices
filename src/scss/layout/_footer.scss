@@ -4,6 +4,11 @@
     background-color: $grisOscuro;
     padding: math.div( $separacion, 2) 0;
     margin-bottom: 0;
+
+    .navegacion {
+        visibility: visible;
+        opacity: 1;
+    }
 }
 
 .contenedor-footer {
