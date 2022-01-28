@@ -39,7 +39,8 @@
     
     visibility: hidden;
     opacity: 1;
-    transition: visibility .3s ease-in-out, opacity 0.5s linear;
+    height: 0;
+    transition: visibility .3s ease-in-out, opacity 0.5s linear, height .5s linear;
 
     // Para hacer que los enlaces se muestren de forma horizontal
     @include tablet {
@@ -47,6 +48,7 @@
         align-items: center;
         visibility: visible;
         opacity: 1;
+        height: auto;
     }
 
     a {
@@ -84,4 +86,5 @@
 .mostrar {
     visibility: visible;
     opacity: 1;
+    height: auto;
 }

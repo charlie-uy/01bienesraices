@@ -11,8 +11,6 @@ function darkMode() {
     });
 };
 
-
-
 function eventListeners() {
     const mobileMenu = document.querySelector('.mobile-menu');
     mobileMenu.addEventListener('click', navegacionResponsive);
