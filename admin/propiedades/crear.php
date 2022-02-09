@@ -28,8 +28,6 @@
         var_dump($_POST);gi
         echo "</pre>"; */
 
-
-
         $titulo = mysqli_real_escape_string( $db, $_POST['titulo'] );
         $precio = mysqli_real_escape_string( $db, $_POST['precio'] );
         $descripcion = mysqli_real_escape_string( $db, $_POST['descripcion'] );
@@ -75,9 +73,23 @@
         }
 
 
-        // Revisar que el arreglo de errores esté vacío
+        //* Revisa que el arreglo de errores esté vacío
         if(empty($errores)) {
-            // Insertar en la base de datos
+
+            //* Subida de archivos
+
+            // Crear carpeta
+            $carpetaImagenes = '../../imagenes';
+
+            // Se verifica, si no existe se crea la carpeta
+            if(!is_dir($carpetaImagenes)) {
+                mkdir($carpetaImagenes);
+            }
+
+            //* Subir la imagen
+            move_uploaded_file(!$imagen['tmp_name'], $carpetaImagenes, "/archivo.jpg" );
+
+            //* Insertar en la base de datos
             $query = "INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId)
             VALUES ( '$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId') ";
 
