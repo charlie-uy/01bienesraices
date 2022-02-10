@@ -40,6 +40,10 @@
         // Asignar archivos hacia una variable
         $imagen = $_FILES['imagen'];
 
+        /*  echo "<pre>";
+        var_dump($imagen);
+        echo "</pre>"; */
+
         if(!$titulo) {
             $errores[] = "Debes añadir un título";
         }
@@ -79,19 +83,29 @@
             //* Subida de archivos
 
             // Crear carpeta
-            $carpetaImagenes = '../../imagenes';
+            $carpetaImagenes = '../../imagenes/';
 
             // Se verifica, si no existe se crea la carpeta
             if(!is_dir($carpetaImagenes)) {
                 mkdir($carpetaImagenes);
             }
 
+            //Define la extensión para el archivo
+            if ($imagen['type'] === 'image/jpeg') {
+                $exten = '.jpg';
+            } else {
+                $exten = '.png';
+            }
+
+            //* Generar un nombre único para la imagen
+            $nombreImagen = md5( uniqid( rand() , true))  . $exten;
+
             //* Subir la imagen
-            move_uploaded_file(!$imagen['tmp_name'], $carpetaImagenes, "/archivo.jpg" );
+            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
 
             //* Insertar en la base de datos
-            $query = "INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId)
-            VALUES ( '$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId') ";
+            $query = "INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId)
+            VALUES ( '$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId') ";
 
             $resultado = mysqli_query($db, $query);
             
@@ -128,7 +142,7 @@
                 <input type="number" id="precio" name="precio" placeholder="Precio propiedad" value="<?php echo $precio; ?>">
                 
                 <label for="imagen">Imagen:</label>
-                <input type="file" id="imagen" name="imagen" accept="image/jpeg, image/png">
+                <input type="file" id="imagen" name="imagen" accept="image/jpeg, image/png, image/jpg">
 
                 <label for="descripcion">Descripción</label>
                 <textarea id="descripcion" name="descripcion"><?php echo $descripcion; ?></textarea>
