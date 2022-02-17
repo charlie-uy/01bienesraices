@@ -1,39 +1,44 @@
 <?php
 
+    // ! Validar la URL y que se pase un id válido
+    
     $id = $_GET['id'];
     $id = filter_var($id, FILTER_VALIDATE_INT);
 
+    // ¡ Si el id no es válido se redirecciona al admin
     if (!$id) {
         header('Location: /admin');
     }
 
     // Base de datos
     require '../../includes/config/database.php';
-    
     $db = conectarDB();
 
-    // Consultar para obtener los vendedores
+    // ¡ Obtener los datos de la propiedad
+    $consulta = "SELECT * FROM propiedades WHERE id = ${id}";
+    $resultado = mysqli_query($db, $consulta);
+    $propiedad = mysqli_fetch_assoc($resultado);
+
+    // ¡ Consultar para obtener los vendedores
 
     $consulta = "SELECT * FROM vendedores";
     $resultado = mysqli_query($db, $consulta);
 
-    // Arreglo con mensajes de errores
+    // ! Arreglo con mensajes de errores
 
     $errores = [];
 
-    $titulo = '';
-    $precio = '';
-    $descripcion = '';
-    $habitaciones = '';
-    $wc = '';
-    $estacionamiento = '';
-    $vendedorId = '';
+    $titulo = $propiedad['titulo'];
+    $precio = $propiedad['precio'];
+    $descripcion = $propiedad['descripcion'];
+    $habitaciones = $propiedad['habitaciones'];
+    $wc = $propiedad['wc'];
+    $estacionamiento = $propiedad['estacionamiento'];
+    $vendedorId = $propiedad['vendedorId'];
+    $imagenPropiedad = $propiedad['imagen'];
 
-    // Ejecutar el código después que el usuario envia el formulario
+    // ¡ Ejecutar el código después que el usuario envia el formulario
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
-        /*echo "<pre>";
-        var_dump($_POST);gi
-        echo "</pre>"; */
 
         $titulo = mysqli_real_escape_string( $db, $_POST['titulo'] );
         $precio = mysqli_real_escape_string( $db, $_POST['precio'] );
@@ -150,6 +155,8 @@
                 
                 <label for="imagen">Imagen:</label>
                 <input type="file" id="imagen" name="imagen" accept="image/jpeg, image/png, image/jpg">
+
+                <img src="/imagenes/<?php echo $imagenPropiedad; ?>" class="imagen-small">
 
                 <label for="descripcion">Descripción</label>
                 <textarea id="descripcion" name="descripcion"><?php echo $descripcion; ?></textarea>
