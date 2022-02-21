@@ -89,31 +89,36 @@
         //* Revisa que el arreglo de errores esté vacío
         if(empty($errores)) {
 
-/*             //* Subida de archivos
+            //* Subida de archivos
 
-            // Crear carpeta
+            // Carpeta
             $carpetaImagenes = '../../imagenes/';
 
-            // Se verifica, si no existe se crea la carpeta
-            if(!is_dir($carpetaImagenes)) {
-                mkdir($carpetaImagenes);
-            }
+            // ¡ Caso de nueva foto
+            if($imagen['name']) {
+                // Eliminar la imagen previa
+                unlink($carpetaImagenes . $propiedad['imagen']);
 
-            //Define la extensión para el archivo
-            if ($imagen['type'] === 'image/jpeg') {
-                $exten = '.jpg';
+                // ¡ Define la extensión para el archivo
+                // A mejorar posteriormente
+                if ($imagen['type'] === 'image/jpeg') {
+                    $exten = '.jpg';
+                } else {
+                    $exten = '.png';
+                }
+
+                //* Generar un nombre único para la imagen
+                $nombreImagen = md5( uniqid( rand() , true))  . $exten;
+
+                //* Subir la imagen
+                move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
+            // ¡ Caso mantiene foto
             } else {
-                $exten = '.png';
+                $nombreImagen = $propiedad['imagen'];
             }
-
-            //* Generar un nombre único para la imagen
-            $nombreImagen = md5( uniqid( rand() , true))  . $exten;
-
-            //* Subir la imagen
-            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen); */
 
             // ! Actualizar en la base de datos
-            $query = "UPDATE propiedades SET titulo = '${titulo}', precio = ${precio},  descripcion = '${descripcion}',  habitaciones = ${habitaciones},  wc = ${wc},  estacionamiento = ${estacionamiento}, vendedorId = ${vendedorId} WHERE id = ${id}";
+            $query = "UPDATE propiedades SET titulo = '${titulo}', precio = ${precio}, imagen = '${nombreImagen}',  descripcion = '${descripcion}',  habitaciones = ${habitaciones},  wc = ${wc},  estacionamiento = ${estacionamiento}, vendedorId = ${vendedorId} WHERE id = ${id}";
 
             // ¡ Código para prueba
             //echo $query;

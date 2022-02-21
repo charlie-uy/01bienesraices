@@ -10,7 +10,7 @@
     $resultadoConsulta = mysqli_query($db, $query);
 
     // Muestra mensaje condicional
-    $mensaje = $_GET['resultado'] ?? null;
+    $resultado = $_GET['resultado'] ?? null;
 
     // Incluye un template
     require '../includes/funciones.php';
