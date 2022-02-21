@@ -77,9 +77,6 @@
         if(!$vendedorId) {
             $errores[] = "Es necesario especificar el vendedor";
         }
-        if( !$imagen['name'] | $imagen['error']) {
-            $errores[] = 'Es necesario agregar una imágen a la propiedad';
-        }
 
         //Validar por tabaño 100 Kb máximo
         $medida = 1000 * 100;
@@ -92,7 +89,7 @@
         //* Revisa que el arreglo de errores esté vacío
         if(empty($errores)) {
 
-            //* Subida de archivos
+/*             //* Subida de archivos
 
             // Crear carpeta
             $carpetaImagenes = '../../imagenes/';
@@ -113,17 +110,20 @@
             $nombreImagen = md5( uniqid( rand() , true))  . $exten;
 
             //* Subir la imagen
-            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
+            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen); */
 
-            //* Insertar en la base de datos
-            $query = "INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedorId)
-            VALUES ( '$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedorId') ";
+            // ! Actualizar en la base de datos
+            $query = "UPDATE propiedades SET titulo = '${titulo}', precio = ${precio},  descripcion = '${descripcion}',  habitaciones = ${habitaciones},  wc = ${wc},  estacionamiento = ${estacionamiento}, vendedorId = ${vendedorId} WHERE id = ${id}";
+
+            // ¡ Código para prueba
+            //echo $query;
+            //exit;
 
             $resultado = mysqli_query($db, $query);
             
             if($resultado) {
                 // Se redirecciona al usuario
-                header('Location: /admin?resultado=1');
+                header('Location: /admin?resultado=2');
             }
 
         }
@@ -143,7 +143,7 @@
             </div>
         <?php endforeach; ?>
 
-        <form class="formulario" method="POST" action="/admin/propiedades/crear.php" enctype="multipart/form-data">
+        <form class="formulario" method="POST" enctype="multipart/form-data">
             <fieldset>
                 <legend>Información general</legend>
 
