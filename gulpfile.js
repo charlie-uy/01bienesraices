@@ -57,7 +57,7 @@ function imageMin(){
         .pipe(dest('build/img'));
 }
  
- 
+
 function imgWebp(){
  
     const settings={
@@ -90,7 +90,7 @@ function imgSvg(){
 function autoCompile(){
     watch(path.scss,compileSass);
     watch(path.js, compileJS);
-    watch(path.img, parallel(imgAvif,imgWebp,imageMin));
+    watch(path.img, parallel( imgAvif,imgWebp, imageMin));
 }
  
-exports.default = parallel(compileSass,compileJS,autoCompile,imgAvif,imageMin,imgWebp, imgSvg);
+exports.default = parallel(compileSass, compileJS, autoCompile, imgAvif, imgWebp, imageMin, imgSvg);
