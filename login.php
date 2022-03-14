@@ -23,6 +23,15 @@
         }
         if(empty($errores)) {
             
+            //Revisar si el usuario existe
+            $query = "SELECT * FROM usuarios WHERE email = '${email}'";
+            $resultado = mysqli_query($db, $query);
+
+            if ( $resultado -> num_rows) {
+                
+            } else {
+                $errores[] = "El usuario no existe";
+            }
         }
     }
 
