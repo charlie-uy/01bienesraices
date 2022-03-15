@@ -1,7 +1,6 @@
 <?php
-session_start();
-
-    $auth = $_SESSION['login'] ?? false;
+    require '../includes/funciones.php';
+    $auth = estaAutenticado();
 
     if(!$auth) {
         header('Location: /');
@@ -45,7 +44,6 @@ session_start();
     
 
     // Incluye un template
-    require '../includes/funciones.php';
     incluirTemplate('header');
 ?>
 

@@ -1,4 +1,13 @@
 <?php
+    
+    //¡ Validar login
+    
+    require '../../includes/funciones.php';
+    $auth = estaAutenticado();
+
+    if(!$auth) {
+        header('Location: /');
+    }
 
     // ! Validar la URL y que se pase un id válido
     
@@ -135,7 +144,6 @@
         
     }
 
-    require '../../includes/funciones.php';
     incluirTemplate('header');
 ?>
 
