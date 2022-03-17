@@ -40,6 +40,10 @@
                     $_SESSION['usuario'] = $usuario['email'];
                     $_SESSION['login'] = true;
 
+                    // Se redirecciona al usuario
+
+                    header('Location: /admin');
+
                 } else {
                     // La contraseña es incorrecta
                     $errores[] = "La contraseña es incorrecta"; 
